@@ -4,7 +4,7 @@
 
 int pinLed = 13;
 
-int pinLDR = A2;
+int pinLDR = A5;
 
 int umbral = 600;
 
