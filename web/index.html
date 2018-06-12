@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Estación meteorológica</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="css/materialize.min.css" />
+	<link rel="stylesheet" href="css/material-icons.css" />
+	<link rel="stylesheet" href="css/fonts.css" />
+	<link rel="stylesheet" href="css/estacion.css" />
+</head>
+<body>
+	<nav class="teal darken-2">
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo">&nbsp;<span class="material-icons">cloud</span></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a href="#actual">Actual</a></li>
+			<li><a href="#graficos">Graficos</a></li>
+			<li><a href="#descargar">Descargar</a></li>
+		</ul>
+		</div>
+	</nav>
+
+	<main class="container">
+
+		<section id="actual">
+			<h3>Condición actual</h3>
+			<div class="row">
+				<div class="col m4">
+					<label>Temperatura</label>
+					<br>
+					<img src="img/termometro.svg" class="icono_medicion" />
+					<span id="temperatura_actual" class="medicion_actual"> - ºC</span>
+				</div>
+				<div class="col m4 text-center">
+					<label>Humedad relativa</label>
+					<br>
+					<img src="img/humedad.svg" class="icono_medicion" />
+					<span id="humedad_actual" class="medicion_actual"> - %</span>
+				</div>
+				<div class="col m4">
+					<label>Luminosidad</label>
+					<br>
+					<img src="img/luminosidad.svg" class="icono_medicion" />
+					<span id="luminosidad_actual" class="medicion_actual"> - %</span>
+				</div>
+			</div>
+		</section>
+
+		<section id="graficos">
+			<h3>Graficos</h3>
+		</section>
+
+		<section id="descargar">
+			<h3>Descargar</h3>
+		</section>
+
+
+
+	</main>
+
+</body>
+</html>
