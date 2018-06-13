@@ -1,3 +1,26 @@
+.icono_medicion {
+	margin: 8px 24px;
+}
+
 .medicion_actual {
 	font-size: 36px;
+	text-align: center;
+}
+
+.lum_graph {
+	display: inline-block;
+	height: 128px;
+	width: 32px;
+	border: 4px solid #333;
+	background: #555;
+	position: relative;
+}
+
+.lum_bar {
+	background: white;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	position: absolute;
+	bottom: 0px;
 }

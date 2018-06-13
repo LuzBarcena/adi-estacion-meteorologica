@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="css/material-icons.css" />
 	<link rel="stylesheet" href="css/fonts.css" />
 	<link rel="stylesheet" href="css/estacion.css" />
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="js/estacion.js"></script>
 </head>
 <body>
 	<nav class="teal darken-2">
@@ -25,24 +27,26 @@
 
 		<section id="actual">
 			<h3>Condición actual</h3>
-			<div class="row">
+			<div class="row center-align">
 				<div class="col m4">
-					<label>Temperatura</label>
-					<br>
-					<img src="img/termometro.svg" class="icono_medicion" />
+					<label class="row">Temperatura</label>
+					<object id="icono_temperatura" class="icono_medicion" data="img/termometro.svg" type="image/svg+xml"></object>
 					<span id="temperatura_actual" class="medicion_actual"> - ºC</span>
 				</div>
 				<div class="col m4 text-center">
 					<label>Humedad relativa</label>
 					<br>
-					<img src="img/humedad.svg" class="icono_medicion" />
+					<object id="icono_humedad" class="icono_medicion" data="img/humedad.svg" type="image/svg+xml"></object>
 					<span id="humedad_actual" class="medicion_actual"> - %</span>
 				</div>
 				<div class="col m4">
 					<label>Luminosidad</label>
 					<br>
-					<img src="img/luminosidad.svg" class="icono_medicion" />
-					<span id="luminosidad_actual" class="medicion_actual"> - %</span>
+					<object id="icono_luminosidad" class="icono_medicion" data="img/luminosidad.svg" type="image/svg+xml"></object>
+					<div class="lum_graph">
+						<div class="lum_bar">
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
