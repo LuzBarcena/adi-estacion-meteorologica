@@ -1,14 +1,9 @@
 <?php
-
-$temp = rand(-10, 50) + rand(0, 9) / 10;
-$hum = rand(0, 100);
-$lum = rand(0, 100);
-
-$datos_enviar = [
-	"temperatura" => $temp,
-	"humedad" => $hum,
-	"luminosidad" => $lum 
-];
-
+$pdo = new PDO ("sqlite:db.sqlite");
+$query =
+	"SELECT temperatura, humedad, luminosidad, timestamp, lat, lng "
+	. "FROM  medicion ORDER BY timestamp DESC LIMIT 1";
+$stmt = $pdo-> query ($query);
+$datos_enviar = $stmt-> fetch (PDO::FETCH_ASSOC);
 header ("Content-Type: application/json");
 echo json_encode ($datos_enviar);
