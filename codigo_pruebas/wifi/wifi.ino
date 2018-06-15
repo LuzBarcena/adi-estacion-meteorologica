@@ -44,9 +44,6 @@ void http_send(char* data) {
   show();
 }
 
-
-
-
 void loop() {
   if (Serial2.available()) {
     Serial.write(Serial2.read());
