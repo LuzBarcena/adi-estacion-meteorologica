@@ -1,55 +1,30 @@
+#define PIN_LUM A0
+#include "config.h"
 
-void setup()
-  {  Serial.begin(115200);
-     Serial2.begin(115200);
-    delay(2000);
-    Serial2.write("AT+RST\r\n");
-    show();
-    delay(2000);
-    Serial2.write("AT+CWMODE=1\r\n"); 
-    show();
-    delay(5000);
-    Serial2.write("AT+CIFSR\r\n"); 
-    show();
-    delay(5000);
-    Serial2.write("AT+CIPSTART=\"TCP\",\"192.168.0.13\",80\r\n");
-    delay(500);
-    show();
-    http_send("POST /guardar.php HTTP/1.1\r\n");
-    http_send("Host: 192.168.0.13\r\n");
-    http_send("Content-Length: 39\r\n");
-    http_send("Content-Type: application/x-www-form-urlencoded\r\n");
-    http_send("\r\n");
-    http_send("temperatura=35&humedad=20&luminosidad=2\r\n");
-    delay(500);
-    Serial2.write("AT+CIPCLOSE\r\n");
-    show();
-  }
+Stream *esp8266 = &Serial3;
 
-void show() {
-  while ( Serial2.available() ) {
-    Serial.write(Serial2.read());
-  }
-}
+void setup()	{
+	pinMode (PIN_LUM, INPUT);
 
-void http_send(char* data) {
-  delay(500);
-  int count_bytes = strlen(data);
-  char enviar[128];
-  sprintf(enviar,"AT+CIPSEND=%d\r\n",count_bytes);
-  Serial2.write(enviar);
-  show();
-  delay(100);
-  Serial2.write(data);
-  show();
+	Serial.begin(115200);
+	Serial3.begin(115200);
+	esp8266-> setTimeout(15000);
+
+	delay (1000);
+	Serial.println ("Inicializar WIFI");
+	wifi_init_client (esp8266);
+	
+	Serial.println ("Conectar a Red");
+	wifi_connect_ssid (esp8266, WIFI_SSID, WIFI_PASSWORD);
 }
 
 void loop() {
-  if (Serial2.available()) {
-    Serial.write(Serial2.read());
-  }
-  if (Serial.available()) {
-    //Serial2.write(Serial.read());
-    
-  }
+	Serial.println ("Enviar datos via http");
+	char post_data[1024];
+	int luminosidad = analogRead (PIN_LUM);
+
+	sprintf (post_data, "luminosidad=%d", (int)(((luminosidad)*100)/1023));
+	http_post (esp8266, SERVER_HOST, SERVER_PORT, SERVER_RESOURCE, post_data);
+	delay (5000);
 }
+
