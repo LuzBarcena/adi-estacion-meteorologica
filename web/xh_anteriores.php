@@ -1,6 +1,6 @@
 <?php
 
-if ($_GET["hora"] != "") {
+if (isset ($_GET["hora"]) && $_GET["hora"] != "") {
 	$pdo = new PDO ("sqlite:db.sqlite");
 	$ahora = time();
 	#echo $ahora;
