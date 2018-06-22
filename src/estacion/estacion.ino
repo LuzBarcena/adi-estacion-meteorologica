@@ -1,7 +1,8 @@
 #include <DS3231.h>
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <TinyGPS.h>
 #include <DHT11.h>
+#include <Wire.h>
 #include <SD.h>
 #include <SPI.h>
 #include "config.h"
@@ -14,6 +15,7 @@ DHT11 dht11(pinDht11);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 DS3231  Clock;
 Stream *esp8266 = &Serial3;
+TinyGPS gps;
 
 bool Century = false;
 bool h12 = false;
@@ -30,12 +32,13 @@ unsigned long t_pantalla_enc = 0;
 unsigned long t_pantalla_act = 0;
 unsigned long actual;
 
-void setup() {
+void setup () {
     Serial.begin(115200);
+    Serial2.begin(9600);
     Serial3.begin(115200);
 
     pinMode(pinBoton, INPUT);
-    pinMode (pinLDR, INPUT);
+    pinMode(pinLDR, INPUT);
     
     Wire.begin();
     lcd.init();
@@ -60,12 +63,14 @@ void setup() {
     Serial.println(actual);    //prints time since program started
 }
 
-void loop() {
+void loop () {
     float temp, hum;
     int lum;
     char* fecha;
     char* hora;
     char post_data[1024];
+	float lat = 0;
+	float lng = 0;
     
     chequear_boton();
     if (transcurrio_tiempo(t_envio, INTERVALO_ENVIO)) { // se mandan datos cada 60 segundos
@@ -75,8 +80,10 @@ void loop() {
             hora = get_hora();
             mostrar_hora(fecha);
             lum = medicion_luminosidad();
+			/* get_lat_lng (&lat, &lng); */
             guardar_sd(fecha, hora, temp, hum, lum);
-            sprintf (post_data, "luminosidad=%d&temperatura=%d&humedad=%d&fecha=%s&hora=%s",lum, (int) temp, (int) hum, fecha, hora);
+            sprintf (post_data, "luminosidad=%d&temperatura=%d&humedad=%d&fecha=%s&hora=%s&lat=%d.%d&lng=%d.%d",
+				lum, (int) temp, (int) hum, fecha, hora, (int)lat, (lat-((int)lat))*100000000, (int)lng, (lng-((int)lng))*100000000);
             http_post (esp8266, SERVER_HOST, SERVER_PORT, SERVER_RESOURCE, post_data);
             free(fecha);
             free(hora);
@@ -95,6 +102,21 @@ void loop() {
         t_pantalla_act = actual;
     }
     delay(100); 
+}
+
+void get_lat_lng (float *lat, float *lng) {
+	Serial.println ("get_lat_lng()");
+	for (unsigned long start = millis(); millis() - start < 1000;) {
+		while (Serial2.available()) {
+			char c = Serial2.read();
+			gps.encode(c);
+		}
+		gps.f_get_position(lat, lng);
+    	if (TinyGPS::GPS_INVALID_F_ANGLE) {
+			lat = 0;
+			lng = 0;
+		}
+  	}
 }
 
 bool transcurrio_tiempo(unsigned long variable, unsigned long tiempo) {
@@ -131,7 +153,7 @@ void mostrar_dht11(float temp, float hum) {
 
 int medicion_luminosidad() {
     int lum;
-    lum = 1023 - analogRead(pinLDR);
+    lum = (int) ((100 * analogRead (pinLDR)) / 1023);
     return lum;
 }
 

@@ -1,5 +1,5 @@
 void wifi_init_client (Stream *stream) {
-	at_command (stream, "AT+CWAUTOCONN=0"); // Deshabilitar conexion automática
+	at_command (stream, "AT+CWAUTOCONN=1"); // Habilitar conexion automática
 	bool success = at_command (stream, "AT+CWMODE=1"); // Modo cliente
 	return success;
 }
