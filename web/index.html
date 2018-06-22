@@ -8,19 +8,22 @@
 	<link rel="stylesheet" href="css/material-icons.css" />
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/fonts.css" />
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="css/estacion.css" />
+
 	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="js/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="js/leaflet.js"></script>
 	<script type="text/javascript" src="js/estacion.js"></script>
+	<script type="text/javascript" src="js/materialize.js"></script>
 </head>
 <body>
-	<nav class="teal darken-2">
+	<nav class="cyan darken-4">
 		<div class="nav-wrapper">
 			<a href="#" class="brand-logo">&nbsp;<span class="material-icons">cloud</span></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li><a href="#actual">Actual</a></li>
-			<li><a href="#graficos">Graficos</a></li>
+			<li><a href="#graficos">Gráficos</a></li>
 			<li><a href="#descargar">Descargar</a></li>
 		</ul>
 		</div>
@@ -29,7 +32,7 @@
 	<main class="container">
 
 		<section id="actual">
-			<h3>Condición actual</h3>
+			<h3>Condición actual <i class="material-icons">nature_people</i></h3>
 			<div class="row center-align">
 
 				<div class="col m4">
@@ -57,7 +60,8 @@
 			</div>
 
 			<div class="row">
-				<label>Localización</label>
+				<h3>Localización <i class="material-icons">location_on</i></h3>
+				<!--<label>Localización <i class="material-icons">location_on</i></label>-->
 				<div id="mapa" class="mapa"></div>
 			</div>
 
@@ -68,21 +72,42 @@
 		</section>
 
 		<section id="graficos">
-			<h3>Graficos</h3>
+			<h3>Gráficos <i class="material-icons">panorama</i></h3>
+			<div class="input-field col s12">
+				<select id="select_hora_grafico">
+					<option value="" disabled selected>Elija una opción de visualización</option>
+					<option value="24hs">24 horas antes</option>
+					<option value="12hs">12 horas antes</option>
+					<option value="1hs">1 hora antes</option>
+				</select>
+			</div>
 			<canvas id="grafico" width="100%"></canvas>
 		</section>
 
 		<section id="descargar">
-			<h3>Descargar</h3>
+			<h3>Descargar <i class="material-icons">file_download</i></h3> 
 			<div class="center-align">
-				<a class="waves-effect waves-light btn-large"><i class="material-icons left">archive</i>Descargar</a>
+				<a class="waves-effect teal darken-4 btn-large" href="descarga_medicion.php"><i class="material-icons left">archive</i>Descargar</a>
 			</div>
-
 		</section>
 
-
-
 	</main>
+
+	<footer class="page-footer cyan darken-4">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12 cyan darken-4">
+					<h6 class="white-text">Primer prototipo de estación meteorológica</h6>
+					<p class="grey-text text-lighten-4">Visualización de datos en tiempo real</p>
+				</div>
+	        </div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				By PABLO CABRERA & LUZ BARCENA
+	        </div>
+		</div>
+    </footer>
 
 </body>
 </html>
