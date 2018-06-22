@@ -24,7 +24,7 @@ int pinLDR = A5;
 int pinBoton = 3;
 int escritos = 0;
 /*Manejo de delays*/
-#define INTERVALO_ENVIO 10000
+#define INTERVALO_ENVIO 60000
 #define INTERVALO_PANTALLA_ENC 30000
 #define INTERVALO_PANTALLA_ACT 5000
 unsigned long t_envio = 0;
