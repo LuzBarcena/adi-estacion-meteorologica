@@ -12,7 +12,6 @@ if ($_GET["hora"] != "") {
 		"SELECT temperatura, humedad, luminosidad, timestamp"
 		. " FROM medicion WHERE timestamp > :desde ORDER BY timestamp";
 
-	#$stmt = $pdo-> query($query);
 	$stmt = $pdo-> prepare($query);
 	$stmt-> execute([":desde"=>$desde]);
 	$datos_enviar = $stmt-> fetchAll(PDO::FETCH_ASSOC);

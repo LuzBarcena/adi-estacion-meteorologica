@@ -128,6 +128,7 @@ function on_actualizar_grafico_success(data) {
 
 
 function actualizar_data(data) {
+	datos = data;
 	lineChart.data = getData(data);
 	lineChart.update();
 }
@@ -247,6 +248,60 @@ function agregar_evento_select_grafico() {
 	});
 }
 
+function descargar_mediciones(hora) {
+	$.ajax ("descarga_medicion.php",
+		{
+			method: "GET",
+			dataType: "json",
+			data: {
+					"hora": hora
+				},
+			success: descarga_succeed
+		}
+	)	
+}
+
+function descarga_succeed(data) {
+	console.log("descarga success");
+}
+
+function agregar_evento_select_descarga() {
+	var select_descarga = document.getElementById("select_hora_descarga");
+	select_descarga.addEventListener("change", function() {
+		switch (select_descarga.value) {
+			case "24hs":
+				descargar_mediciones(24); 
+				break;
+			case "12hs":
+				descargar_mediciones(12); 
+				break;
+			case "1hs":
+				descargar_mediciones(1); 
+				break;
+			default:
+
+		}
+	});
+}
+
+function agregar_evento_btn_descarga() {
+	var btn_descarga = document.getElementById("btn_descargar");
+	btn_descarga.addEventListener("click", function() {	
+		console.log("hice click en el boton");
+		var select_descarga = document.getElementById("select_hora_descarga");
+		console.log(select_descarga.value);
+		$.ajax ("descarga_medicion.php",
+			{
+				method: "GET",
+				dataType: "json",
+				data: {
+						"hora": select_descarga.value
+					},
+				success: descarga_succeed
+			}
+		)
+	});
+}
 
 window.onload = function () {
 	//inicializo el select con materialize
@@ -254,6 +309,7 @@ window.onload = function () {
 	var instances = M.FormSelect.init(elems);
 	//event de select para grafico
 	agregar_evento_select_grafico();
+	agregar_evento_btn_descarga();
 
 	inicializar_mapa ();
 	actualizar_medicion ();
