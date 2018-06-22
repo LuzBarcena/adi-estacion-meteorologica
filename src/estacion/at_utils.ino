@@ -33,6 +33,9 @@ bool at_command (Stream *stream, char *command) {
 				must_read_line = false;
 				must_send = true;
 				delay (300);
+			} else if (strlen (line) == 0) {
+				must_read_line = false;
+				must_send = false;
 			}
 			free (line);
 		}
