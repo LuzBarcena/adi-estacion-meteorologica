@@ -153,7 +153,8 @@ void mostrar_dht11(float temp, float hum) {
 
 int medicion_luminosidad() {
     int lum;
-    lum = (int) ((100 * analogRead (pinLDR)) / 1023);
+    lum = 1023 - analogRead(pinLDR);
+    //lum = (int) ((100 * analogRead (pinLDR)) / 1023);
     return lum;
 }
 

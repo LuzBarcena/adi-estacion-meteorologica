@@ -59,14 +59,14 @@
 				</div>
 			</div>
 
+			<div class="row right-align">
+				<p>Medido el <time id="fecha"></time> a las <time id="hora"></time></p>
+			</div>
+
 			<div class="row">
 				<h3>Localización <i class="material-icons">location_on</i></h3>
 				<!--<label>Localización <i class="material-icons">location_on</i></label>-->
 				<div id="mapa" class="mapa"></div>
-			</div>
-
-			<div class="row right-align">
-				<p>Medido el <time id="fecha"></time> a las <time id="hora"></time></p>
 			</div>
 
 		</section>
@@ -85,9 +85,17 @@
 		</section>
 
 		<section id="descargar">
-			<h3>Descargar <i class="material-icons">file_download</i></h3> 
+			<h3>Descargar <i class="material-icons">file_download</i></h3>
+			<div class="input-field col s12">
+				<select id="select_hora_descarga">
+					<option value="" disabled selected>Elija una opción para la descarga</option>
+					<option value="24hs" selected>24 horas antes</option>
+					<option value="12hs">12 horas antes</option>
+					<option value="1hs">1 hora antes</option>
+				</select>
+			</div>
 			<div class="center-align">
-				<a class="waves-effect teal darken-4 btn-large" href="descarga_medicion.php"><i class="material-icons left">archive</i>Descargar</a>
+				<button id="btn_descargar" class="waves-effect teal darken-4 btn-large"><i class="material-icons left">archive</i>Descargar</button>
 			</div>
 		</section>
 
