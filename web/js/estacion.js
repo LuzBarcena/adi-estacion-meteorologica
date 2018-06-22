@@ -263,6 +263,7 @@ function descargar_mediciones(hora) {
 
 function descarga_succeed(data) {
 	console.log("descarga success");
+	window.location = data.uri;
 }
 
 function agregar_evento_select_descarga() {
@@ -287,7 +288,6 @@ function agregar_evento_select_descarga() {
 function agregar_evento_btn_descarga() {
 	var btn_descarga = document.getElementById("btn_descargar");
 	btn_descarga.addEventListener("click", function() {	
-		console.log("hice click en el boton");
 		var select_descarga = document.getElementById("select_hora_descarga");
 		console.log(select_descarga.value);
 		$.ajax ("descarga_medicion.php",

@@ -1,13 +1,10 @@
 <?php
 
 if ($_GET["hora"] != "") {
-	echo $_GET["hora"];
 	$pdo = new PDO ("sqlite:db.sqlite");
 	$ahora = time();
-	#echo $ahora;
 	$date = new DateTime();
 	$date -> setTimestamp($ahora);
-	#echo $date->format('U = Y-m-d H:i:s') . "\n";
 	$desde = $ahora  - (intval($_GET["hora"]) * 60 * 60);
 	$query =
 		"SELECT temperatura, humedad, luminosidad, timestamp"
@@ -22,4 +19,6 @@ if ($_GET["hora"] != "") {
 	foreach($datos_enviar as $key=>$value){
 		fputcsv($file, $value);
 	}	
+	header ("Content-Type: application/json");
+	echo json_encode (["uri" => "mediciones.csv"]);
 }
