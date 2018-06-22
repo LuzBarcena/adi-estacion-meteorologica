@@ -24,7 +24,7 @@ int pinLDR = A5;
 int pinBoton = 3;
 int escritos = 0;
 /*Manejo de delays*/
-#define INTERVALO_ENVIO 60000
+#define INTERVALO_ENVIO 10000
 #define INTERVALO_PANTALLA_ENC 30000
 #define INTERVALO_PANTALLA_ACT 5000
 unsigned long t_envio = 0;
@@ -80,7 +80,7 @@ void loop () {
             hora = get_hora();
             mostrar_hora(fecha);
             lum = medicion_luminosidad();
-			/* get_lat_lng (&lat, &lng); */
+			get_lat_lng (&lat, &lng);
             guardar_sd(fecha, hora, temp, hum, lum);
             sprintf (post_data, "luminosidad=%d&temperatura=%d&humedad=%d&fecha=%s&hora=%s&lat=%d.%d&lng=%d.%d",
 				lum, (int) temp, (int) hum, fecha, hora, (int)lat, (lat-((int)lat))*100000000, (int)lng, (lng-((int)lng))*100000000);
@@ -104,19 +104,19 @@ void loop () {
     delay(100); 
 }
 
+float flat, flng;
 void get_lat_lng (float *lat, float *lng) {
-	Serial.println ("get_lat_lng()");
-	for (unsigned long start = millis(); millis() - start < 1000;) {
-		while (Serial2.available()) {
-			char c = Serial2.read();
-			gps.encode(c);
+	bool newData = false;
+	while (Serial2.available()) {
+		char c = Serial2.read();
+		if (gps.encode(c)) {
+			newData = true;
 		}
-		gps.f_get_position(lat, lng);
-    	if (TinyGPS::GPS_INVALID_F_ANGLE) {
-			lat = 0;
-			lng = 0;
-		}
-  	}
+	}
+	if (newData) {
+		*lat = flat;
+		*lng = flng;
+	}
 }
 
 bool transcurrio_tiempo(unsigned long variable, unsigned long tiempo) {
